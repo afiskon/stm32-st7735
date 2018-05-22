@@ -62,14 +62,7 @@ void loop() {
     ST7735_WriteString(0, 3*10+3*18, "Font_16x26", Font_16x26, ST7735_BLUE, ST7735_BLACK);
     HAL_Delay(2000);
 
-    // Check color inversion
-    ST7735_InvertColors(true);
-    HAL_Delay(2000);
-    ST7735_InvertColors(false);
-    HAL_Delay(2000);
-
     // Check colors
-
     ST7735_FillScreen(ST7735_BLACK);
     ST7735_WriteString(0, 0, "BLACK", Font_11x18, ST7735_WHITE, ST7735_BLACK);
     HAL_Delay(500);
@@ -102,11 +95,11 @@ void loop() {
     ST7735_WriteString(0, 0, "WHITE", Font_11x18, ST7735_BLACK, ST7735_WHITE);
     HAL_Delay(500);
 
-    // Display test image
+#ifdef ST7735_IS_128X128
+    // Display test image 128x128
     ST7735_DrawImage(0, 0, ST7735_WIDTH, ST7735_HEIGHT, (uint16_t*)test_img_128x128);
 
-/*
-    // Display test image pixel by pixel
+    // Display test image 128x128 pixel by pixel
     for(int x = 0; x < ST7735_WIDTH; x++) {
         for(int y = 0; y < ST7735_HEIGHT; y++) {
             uint16_t color565 = test_img_128x128[y][x];
@@ -115,9 +108,9 @@ void loop() {
             ST7735_DrawPixel(x, y, color565);
         }
     }
-*/
-
     HAL_Delay(15000);
+#endif // ST7735_IS_128X128
+
 }
 
 /* USER CODE END 0 */

@@ -68,7 +68,7 @@ static const uint8_t
       255 },                  //     255 = 500 ms delay
 */
 
-  Rcmd1[] = {                 // Init for 7735R, part 1 (red or green tab)
+  init_cmds1[] = {            // Init for 7735R, part 1 (red or green tab)
     15,                       // 15 commands in list:
     ST7735_SWRESET,   DELAY,  //  1: Software reset, 0 args, w/delay
       150,                    //     150 ms delay
@@ -124,7 +124,9 @@ static const uint8_t
       0x00, 0x00,             //     XSTART = 0
       0x00, 0x9F },           //     XEND = 159
 */
-  Rcmd2green144[] = {              // Init for 7735R, part 2 (green 1.44 tab)
+
+#ifdef ST7735_IS_128X128
+  init_cmds2[] = {            // Init for 7735R, part 2 (1.44" display)
     2,                        //  2 commands in list:
     ST7735_CASET  , 4      ,  //  1: Column addr set, 4 args, no delay:
       0x00, 0x00,             //     XSTART = 0
@@ -132,18 +134,21 @@ static const uint8_t
     ST7735_RASET  , 4      ,  //  2: Row addr set, 4 args, no delay:
       0x00, 0x00,             //     XSTART = 0
       0x00, 0x7F },           //     XEND = 127
-/*
-  Rcmd2green160x80[] = {              // Init for 7735R, part 2 (mini 160x80)
-    2,                        //  2 commands in list:
+#endif // ST7735_IS_128X128
+
+#ifdef ST7735_IS_160X80
+  init_cmds2[] = {            // Init for 7735S, part 2 (160x80 display)
+    3,                        //  3 commands in list:
     ST7735_CASET  , 4      ,  //  1: Column addr set, 4 args, no delay:
       0x00, 0x00,             //     XSTART = 0
-      0x00, 0x7F,             //     XEND = 79
+      0x00, 0x4F,             //     XEND = 79
     ST7735_RASET  , 4      ,  //  2: Row addr set, 4 args, no delay:
       0x00, 0x00,             //     XSTART = 0
-      0x00, 0x9F },           //     XEND = 159
-*/
+      0x00, 0x9F ,            //     XEND = 159
+    ST7735_INVON, 0 },        //  3: Invert colors
+#endif
 
-  Rcmd3[] = {                 // Init for 7735R, part 3 (red or green tab)
+  init_cmds3[] = {            // Init for 7735R, part 3 (red or green tab)
     4,                        //  4 commands in list:
     ST7735_GMCTRP1, 16      , //  1: Magical unicorn dust, 16 args, no delay:
       0x02, 0x1c, 0x07, 0x12,
@@ -229,9 +234,9 @@ static void ST7735_SetAddressWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t 
 void ST7735_Init() {
     ST7735_Select();
     ST7735_Reset();
-    ST7735_ExecuteCommandList(Rcmd1);
-    ST7735_ExecuteCommandList(Rcmd2green144);
-    ST7735_ExecuteCommandList(Rcmd3);
+    ST7735_ExecuteCommandList(init_cmds1);
+    ST7735_ExecuteCommandList(init_cmds2);
+    ST7735_ExecuteCommandList(init_cmds3);
     ST7735_Unselect();
 }
 

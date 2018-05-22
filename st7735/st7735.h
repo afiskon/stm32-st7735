@@ -34,6 +34,8 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 
 // for 1.44" display
 
+/*
+#define ST7735_IS_128X128 1
 #define ST7735_WIDTH  128
 #define ST7735_HEIGHT 128
 
@@ -41,6 +43,7 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 #define ST7735_XSTART 2
 #define ST7735_YSTART 3
 #define ST7735_ROTATION (ST7735_MADCTL_MX | ST7735_MADCTL_MY | ST7735_MADCTL_BGR)
+*/
 
 // rotate right
 //#define ST7735_XSTART 3
@@ -57,13 +60,24 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 //#define ST7735_YSTART 2
 //#define ST7735_ROTATION (ST7735_MADCTL_MX | ST7735_MADCTL_MV | ST7735_MADCTL_BGR)
 
-// for mini 160x80 display // TODO test!
+// for mini 160x80 display (it's unlikely you want the default orientation)
 /*
-#define ST7735_XSTART 24
-#define ST7735_YSTART 0
+#define ST7735_IS_160X80 1
+#define ST7735_XSTART 26
+#define ST7735_YSTART 1
 #define ST7735_WIDTH  80
-#define ST7735_HEIGHT 160
+#define ST7735_HEIGHT 160 
+#define ST7735_ROTATION (ST7735_MADCTL_MX | ST7735_MADCTL_MY | ST7735_MADCTL_BGR)
 */
+
+// mini 160x80, rotate left
+#define ST7735_IS_160X80 1
+#define ST7735_XSTART 1
+#define ST7735_YSTART 26
+#define ST7735_WIDTH  160
+#define ST7735_HEIGHT 80
+#define ST7735_ROTATION (ST7735_MADCTL_MX | ST7735_MADCTL_MV | ST7735_MADCTL_BGR)
+
 /****************************/
 
 #define ST7735_NOP     0x00
