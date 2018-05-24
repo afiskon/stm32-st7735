@@ -24,12 +24,16 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 #define ST7735_DC_Pin        GPIO_PIN_9
 #define ST7735_DC_GPIO_Port  GPIOA
 
-// for 1.8" display // TODO test!
+// for WaveShare 1.8" display based on ST7735S
 /*
-#define ST7735_XSTART 2
-#define ST7735_YSTART 1
+#define ST7735_IS_160X128 1
 #define ST7735_WIDTH  128
 #define ST7735_HEIGHT 160
+
+// default orientation
+#define ST7735_XSTART 2
+#define ST7735_YSTART 1
+#define ST7735_ROTATION (ST7735_MADCTL_MX | ST7735_MADCTL_MY | ST7735_MADCTL_RGB)
 */
 
 // for 1.44" display

@@ -125,7 +125,7 @@ static const uint8_t
       0x00, 0x9F },           //     XEND = 159
 */
 
-#ifdef ST7735_IS_128X128
+#if (defined(ST7735_IS_128X128) || defined(ST7735_IS_160X128))
   init_cmds2[] = {            // Init for 7735R, part 2 (1.44" display)
     2,                        //  2 commands in list:
     ST7735_CASET  , 4      ,  //  1: Column addr set, 4 args, no delay:
