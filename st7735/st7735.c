@@ -4,70 +4,8 @@
 
 #define DELAY 0x80
 
-
-// copy-pasted from Adafruit ST7735 library for Arduino
+// based on Adafruit ST7735 library for Arduino
 static const uint8_t
-/*
-  Bcmd[] = {                  // Initialization commands for 7735B screens
-    18,                       // 18 commands in list:
-    ST7735_SWRESET,   DELAY,  //  1: Software reset, no args, w/delay
-      50,                     //     50 ms delay
-    ST7735_SLPOUT ,   DELAY,  //  2: Out of sleep mode, no args, w/delay
-      255,                    //     255 = 500 ms delay
-    ST7735_COLMOD , 1+DELAY,  //  3: Set color mode, 1 arg + delay:
-      0x05,                   //     16-bit color
-      10,                     //     10 ms delay
-    ST7735_FRMCTR1, 3+DELAY,  //  4: Frame rate control, 3 args + delay:
-      0x00,                   //     fastest refresh
-      0x06,                   //     6 lines front porch
-      0x03,                   //     3 lines back porch
-      10,                     //     10 ms delay
-    ST7735_MADCTL , 1      ,  //  5: Memory access ctrl (directions), 1 arg:
-      0x08,                   //     Row addr/col addr, bottom to top refresh
-    ST7735_DISSET5, 2      ,  //  6: Display settings #5, 2 args, no delay:
-      0x15,                   //     1 clk cycle nonoverlap, 2 cycle gate
-                              //     rise, 3 cycle osc equalize
-      0x02,                   //     Fix on VTL
-    ST7735_INVCTR , 1      ,  //  7: Display inversion control, 1 arg:
-      0x0,                    //     Line inversion
-    ST7735_PWCTR1 , 2+DELAY,  //  8: Power control, 2 args + delay:
-      0x02,                   //     GVDD = 4.7V
-      0x70,                   //     1.0uA
-      10,                     //     10 ms delay
-    ST7735_PWCTR2 , 1      ,  //  9: Power control, 1 arg, no delay:
-      0x05,                   //     VGH = 14.7V, VGL = -7.35V
-    ST7735_PWCTR3 , 2      ,  // 10: Power control, 2 args, no delay:
-      0x01,                   //     Opamp current small
-      0x02,                   //     Boost frequency
-    ST7735_VMCTR1 , 2+DELAY,  // 11: Power control, 2 args + delay:
-      0x3C,                   //     VCOMH = 4V
-      0x38,                   //     VCOML = -1.1V
-      10,                     //     10 ms delay
-    ST7735_PWCTR6 , 2      ,  // 12: Power control, 2 args, no delay:
-      0x11, 0x15,
-    ST7735_GMCTRP1,16      ,  // 13: Magical unicorn dust, 16 args, no delay:
-      0x09, 0x16, 0x09, 0x20, //     (seriously though, not sure what
-      0x21, 0x1B, 0x13, 0x19, //      these config values represent)
-      0x17, 0x15, 0x1E, 0x2B,
-      0x04, 0x05, 0x02, 0x0E,
-    ST7735_GMCTRN1,16+DELAY,  // 14: Sparkles and rainbows, 16 args + delay:
-      0x0B, 0x14, 0x08, 0x1E, //     (ditto)
-      0x22, 0x1D, 0x18, 0x1E,
-      0x1B, 0x1A, 0x24, 0x2B,
-      0x06, 0x06, 0x02, 0x0F,
-      10,                     //     10 ms delay
-    ST7735_CASET  , 4      ,  // 15: Column addr set, 4 args, no delay:
-      0x00, 0x02,             //     XSTART = 2
-      0x00, 0x81,             //     XEND = 129
-    ST7735_RASET  , 4      ,  // 16: Row addr set, 4 args, no delay:
-      0x00, 0x02,             //     XSTART = 1
-      0x00, 0x81,             //     XEND = 160
-    ST7735_NORON  ,   DELAY,  // 17: Normal display on, no args, w/delay
-      10,                     //     10 ms delay
-    ST7735_DISPON ,   DELAY,  // 18: Main screen turn on, no args, w/delay
-      255 },                  //     255 = 500 ms delay
-*/
-
   init_cmds1[] = {            // Init for 7735R, part 1 (red or green tab)
     15,                       // 15 commands in list:
     ST7735_SWRESET,   DELAY,  //  1: Software reset, 0 args, w/delay
@@ -104,26 +42,6 @@ static const uint8_t
       ST7735_ROTATION,        //     row addr/col addr, bottom to top refresh
     ST7735_COLMOD , 1      ,  // 15: set color mode, 1 arg, no delay:
       0x05 },                 //     16-bit color
-
-/*
-  Rcmd2green[] = {            // Init for 7735R, part 2 (green tab only)
-    2,                        //  2 commands in list:
-    ST7735_CASET  , 4      ,  //  1: Column addr set, 4 args, no delay:
-      0x00, 0x02,             //     XSTART = 0
-      0x00, 0x7F+0x02,        //     XEND = 127
-    ST7735_RASET  , 4      ,  //  2: Row addr set, 4 args, no delay:
-      0x00, 0x01,             //     XSTART = 0
-      0x00, 0x9F+0x01 },      //     XEND = 159
-
-  Rcmd2red[] = {              // Init for 7735R, part 2 (red tab only)
-    2,                        //  2 commands in list:
-    ST7735_CASET  , 4      ,  //  1: Column addr set, 4 args, no delay:
-      0x00, 0x00,             //     XSTART = 0
-      0x00, 0x7F,             //     XEND = 127
-    ST7735_RASET  , 4      ,  //  2: Row addr set, 4 args, no delay:
-      0x00, 0x00,             //     XSTART = 0
-      0x00, 0x9F },           //     XEND = 159
-*/
 
 #if (defined(ST7735_IS_128X128) || defined(ST7735_IS_160X128))
   init_cmds2[] = {            // Init for 7735R, part 2 (1.44" display)
