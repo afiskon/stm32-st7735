@@ -6,4 +6,5 @@ See also:
 
 * https://github.com/afiskon/stm32-fatfs-examples
 * https://github.com/afiskon/stm32-ssd1306
+* https://github.com/afiskon/stm32-ssd1351
 * https://github.com/afiskon/stm32-ili9341
