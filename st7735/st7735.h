@@ -186,6 +186,7 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 
 #define ST7735_INVOFF  0x20
 #define ST7735_INVON   0x21
+#define ST7735_GAMSET  0x26
 #define ST7735_DISPOFF 0x28
 #define ST7735_DISPON  0x29
 #define ST7735_CASET   0x2A
@@ -231,6 +232,13 @@ extern SPI_HandleTypeDef ST7735_SPI_PORT;
 #define ST7735_WHITE   0xFFFF
 #define ST7735_COLOR565(r, g, b) (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | ((b & 0xF8) >> 3))
 
+typedef enum {
+	GAMMA_10 = 0x01,
+	GAMMA_25 = 0x02,
+	GAMMA_22 = 0x04,
+	GAMMA_18 = 0x08
+} GammaDef;
+
 // call before initializing any SPI devices
 void ST7735_Unselect();
 
@@ -243,5 +251,6 @@ void ST7735_FillScreen(uint16_t color);
 void ST7735_FillScreenFast(uint16_t color);
 void ST7735_DrawImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t* data);
 void ST7735_InvertColors(bool invert);
+void ST7735_SetGamma(GammaDef gamma);
 
 #endif // __ST7735_H__

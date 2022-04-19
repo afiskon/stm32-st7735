@@ -303,4 +303,10 @@ void ST7735_InvertColors(bool invert) {
     ST7735_Unselect();
 }
 
-
+void ST7735_SetGamma(uint8_t gamma)
+{
+	ST7735_Select();
+	ST7735_WriteCommand(ST7735_GAMSET);
+	ST7735_WriteData(&gamma, sizeof(gamma));
+	ST7735_Unselect();
+}
