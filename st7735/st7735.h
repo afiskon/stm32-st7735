@@ -239,6 +239,10 @@ typedef enum {
 	GAMMA_18 = 0x08
 } GammaDef;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // call before initializing any SPI devices
 void ST7735_Unselect();
 
@@ -252,5 +256,9 @@ void ST7735_FillScreenFast(uint16_t color);
 void ST7735_DrawImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t* data);
 void ST7735_InvertColors(bool invert);
 void ST7735_SetGamma(GammaDef gamma);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __ST7735_H__
